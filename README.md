@@ -84,16 +84,6 @@ songstore/
 └── package.json
 ```
 
-### 📊 เปรียบเทียบก่อนและหลัง Refactor
-
-| ก่อน Refactor | หลัง Refactor |
-|--------------|---------------|
-| `backend.js` (700+ บรรทัด) | 5 ไฟล์ (ไฟล์ละ ~50-150 บรรทัด) |
-| `frontend.js` (550+ บรรทัด) | 5 ไฟล์ (ไฟล์ละ ~50-150 บรรทัด) |
-| Mixed concerns | Separation of Concerns |
-| Hard to maintain | Easy to maintain |
-| Single file | Modular architecture |
-
 ---
 
 ## 📦 การติดตั้ง
@@ -228,9 +218,3 @@ Album (1) ──< Song (Many)
 2. **Port:** Backend ใช้ port 3000, Frontend ใช้ port 4000
 3. **ฐานข้อมูล:** ไฟล์ `music.sqlite` จะถูกสร้างอัตโนมัติ
 4. **Font:** ระบบใช้ Google Font "Sukhumvit Set" ต้องเชื่อมต่ออินเทอร์เน็ต
-
----
-
-## 📄 License
-
-MIT License - พัฒนาเพื่อการศึกษา
