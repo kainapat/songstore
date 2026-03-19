@@ -166,10 +166,11 @@ node verify_db.js
 
 ### UI/UX
 - **Font**: Sukhumvit Set (loaded from Google Fonts)
-- Responsive design with mobile support
-- Gradient theme (purple/indigo)
-- Card-based dashboard
-- Clean table layouts with hover effects
+- **Dashboard Cards**: Grid layout with proper spacing (padding: 30px 25px 35px)
+- **Card Links**: Inline-block positioning (not absolute) to prevent text overlap
+- **Responsive design** with mobile support
+- **Gradient theme** (purple/indigo)
+- **Clean table layouts** with hover effects
 
 ### Seed Data
 Auto-populated on first run:
@@ -204,13 +205,16 @@ Auto-populated on first run:
 - Form actions use POST method (PUT/DELETE routed via Express)
 - Filter forms use GET with query parameters
 - Inline confirmation for destructive actions
+- Page headers wrapped in `<div>` for flex layout
 
 ### CSS Conventions
-- Font: `'Sukhumvit Set', 'Sarabun', sans-serif`
-- Line-height: 1.3-1.6 for readability
-- Box-sizing: border-box globally
-- Responsive breakpoints at 768px
-- Gradient buttons and badges
+- **Font**: `'Sukhumvit Set', 'Sarabun', sans-serif`
+- **Line-height**: 1.3-1.6 for readability
+- **Box-sizing**: border-box globally (`*, *::before, *::after`)
+- **Responsive breakpoints**: 768px
+- **Gradient buttons and badges**
+- **Card padding**: 30px 25px 35px (extra bottom padding)
+- **Card links**: inline-block with margin-top (not absolute positioned)
 
 ### Database Practices
 - `timestamps: false` - No auto-generated created_at/updated_at
@@ -244,6 +248,9 @@ node backend.js
 ### Change Font
 Edit `views/header.ejs` to change Google Fonts link, and update `body` font-family in `public/styles.css`
 
+### Fix Card Text Overlap
+Ensure `.card-link` uses `position: relative` and `display: inline-block` with `margin-top`, and `.card` has sufficient bottom padding (35px)
+
 ---
 
 ## Troubleshooting
@@ -256,6 +263,7 @@ Edit `views/header.ejs` to change Google Fonts link, and update `body` font-fami
 | API not responding | Start backend before frontend |
 | Text overlapping | Check internet connection for font, hard refresh (Ctrl+F5) |
 | Font not loading | Verify Google Fonts link in header.ejs, check network tab |
+| Card text overlap | Ensure card-link uses inline-block positioning, check card padding |
 
 ---
 
@@ -268,8 +276,14 @@ Edit `views/header.ejs` to change Google Fonts link, and update `body` font-fami
 | `models/index.js` | Database connection, models, relationships, seed data |
 | `views/header.ejs` | HTML head with Google Fonts (Sukhumvit Set) |
 | `views/footer.ejs` | Closing HTML tags and footer |
-| `views/*.ejs` | Page templates (index, artists, albums, songs, forms) |
-| `public/styles.css` | Responsive CSS with Sukhumvit Set font |
+| `views/index.ejs` | Home dashboard with stat cards |
+| `views/artists.ejs` | Artists list with table |
+| `views/artist-form.ejs` | Artist create/edit form |
+| `views/albums.ejs` | Albums list with filters |
+| `views/album-form.ejs` | Album create/edit form |
+| `views/songs.ejs` | Songs list with filters |
+| `views/song-form.ejs` | Song create/edit form |
+| `public/styles.css` | Responsive CSS with Sukhumvit Set font, fixed card layout |
 | `verify_db.js` | Automated API testing script |
 
 ---
@@ -280,15 +294,26 @@ Edit `views/header.ejs` to change Google Fonts link, and update `body` font-fami
 - **Primary**: Sukhumvit Set (Google Fonts)
 - **Fallback**: Sarabun, Segoe UI, sans-serif
 - **Loading**: Via `<link>` in header.ejs
+- **Smoothing**: `-webkit-font-smoothing`, `-moz-osx-font-smoothing`
 
-### CSS Improvements
-- Added `line-height` to all text elements (1.3-1.6)
-- Added `-webkit-font-smoothing` for better rendering
-- Fixed box-sizing with `*, *::before, *::after`
-- Improved responsive design at 768px breakpoint
-- Added `white-space: nowrap` to badges and buttons
+### CSS Improvements (Latest)
+- **Line-height** applied to all text elements (1.3-1.6)
+- **Box-sizing** with `*, *::before, *::after`
+- **Responsive breakpoints** at 768px
+- **White-space: nowrap** for badges and buttons
+- **Card layout fixed**:
+  - Padding: `30px 25px 35px` (extra bottom padding)
+  - Card-link: `display: inline-block`, `margin-top: 10px`, `position: relative`, `bottom: auto`
+  - Stat-info p: `margin: 0 0 15px 0` (bottom margin for spacing)
 
 ### Template Structure
 - Page headers wrapped in `<div>` for better flex layout
 - Consistent button styling across all pages
 - Filter sections with proper spacing
+
+### Color Scheme
+- **Primary**: #667eea (purple)
+- **Secondary**: #764ba2 (indigo)
+- **Gradient**: 135deg linear gradient
+- **Text**: #333, #555, #777
+- **White**: #ffffff for cards/forms
