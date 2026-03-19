@@ -2,11 +2,12 @@
   "name": "songstore",
   "version": "1.0.0",
   "description": "Song Store - Full-stack Web Application",
-  "main": "backend.js",
+  "main": "backend/index.js",
   "scripts": {
-    "start:backend": "node backend.js",
-    "start:frontend": "node frontend.js",
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+    "start:backend": "node backend/index.js",
+    "start:frontend": "node frontend/index.js",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
   },
   "keywords": ["song", "store", "music", "express", "sequelize"],
   "author": "",

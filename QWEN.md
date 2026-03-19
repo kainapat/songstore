@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Song Store** is a full-stack web application for managing music data including artists, albums, and songs. Built with Node.js, it features a separated backend/frontend architecture with RESTful API communication.
+**Song Store** is a full-stack web application for managing music data including artists, albums, and songs. Built with Node.js, it features a **modular architecture** with separated backend/frontend.
 
 ### Architecture
 
@@ -30,47 +30,57 @@
 | **Fonts** | Google Fonts - Sukhumvit Set |
 | **Theme** | Spotify Dark Theme |
 
-### Database Schema
-
-**3 Tables with Relationships:**
-
-```
-Artist (1) ──< Album (Many)
-Album (1) ──< Song (Many)
-```
-
-| Table | Primary Key | Foreign Keys | Key Fields |
-|-------|-------------|--------------|------------|
-| `artists` | artist_id | - | artist_name, country |
-| `albums` | album_id | artist_id → artists | album_title, release_year |
-| `songs` | song_id | album_id → albums | song_name, genre, duration |
-
 ---
 
-## Project Structure
+## Project Structure (Refactored)
 
 ```
 songstore/
-├── backend.js              # Backend API Server (Port 3000)
-├── frontend.js             # Frontend Web Server (Port 4000)
-├── package.json            # Dependencies & scripts
-├── music.sqlite            # SQLite database (auto-generated)
-├── verify_db.js            # Database verification script
+├── backend/                    # Backend API (Refactored from backend.js)
+│   ├── index.js              # Main entry point (~50 lines)
+│   ├── config/
+│   │   └── database.js       # Sequelize connection
+│   ├── routes/
+│   │   ├── artists.js        # Artist routes (~130 lines)
+│   │   ├── albums.js         # Album routes (~150 lines)
+│   │   └── songs.js          # Song routes (~150 lines)
+│   ├── controllers/
+│   │   ├── artists.js        # Artist business logic (~80 lines)
+│   │   ├── albums.js         # Album business logic (~100 lines)
+│   │   └── songs.js          # Song business logic (~110 lines)
+│   └── utils/
+│       └── helpers.js        # Helper functions
+│
+├── frontend/                   # Frontend Web (Refactored from frontend.js)
+│   ├── index.js              # Main entry point (~50 lines)
+│   ├── routes/
+│   │   ├── pages.js          # Main page routes (~40 lines)
+│   │   ├── artists.js        # Artist page routes (~120 lines)
+│   │   ├── albums.js         # Album page routes (~150 lines)
+│   │   └── songs.js          # Song page routes (~160 lines)
+│   └── utils/
+│       └── api.js            # API client (~50 lines)
+│
 ├── models/
-│   └── index.js            # Sequelize models + relationships + seed data
-├── views/                  # EJS templates
-│   ├── header.ejs          # Navigation header (Spotify Dark navbar)
-│   ├── footer.ejs          # Footer component (Dark)
-│   ├── index.ejs           # Home/Dashboard (Dark cards)
-│   ├── artists.ejs         # Artists list (Dark table)
-│   ├── artist-form.ejs     # Create/Edit artist (Dark form)
-│   ├── albums.ejs          # Albums list with filters (Dark)
-│   ├── album-form.ejs      # Create/Edit album (Dark form)
-│   ├── songs.ejs           # Songs list with filters (Dark)
-│   └── song-form.ejs       # Create/Edit song (Dark form)
-└── public/
-    └── styles.css          # Spotify Dark Theme CSS
+│   └── index.js              # Sequelize models + relationships + seed data
+├── views/                      # EJS templates (9 files)
+├── public/
+│   └── styles.css            # Spotify Dark Theme CSS
+├── music.sqlite              # SQLite database (auto-generated)
+└── package.json
 ```
+
+### 📊 Refactoring Benefits
+
+| Before | After |
+|--------|-------|
+| `backend.js` (700+ lines) | 5 files (avg ~100 lines each) |
+| `frontend.js` (550+ lines) | 5 files (avg ~100 lines each) |
+| Mixed concerns | **Separation of Concerns** |
+| Hard to maintain | **Easy to maintain** |
+| Single file | **Modular architecture** |
+| Hard to test | **Easy to test** |
+| Unclear responsibilities | **Clear responsibilities** |
 
 ---
 
@@ -86,31 +96,30 @@ npm install
 
 **Option 1: Separate terminals (recommended)**
 ```bash
-# Terminal 1 - Start Backend API
-node backend.js
+# Terminal 1 - Backend
+npm run start:backend
+# or
+node backend/index.js
 
-# Terminal 2 - Start Frontend Web Server
-node frontend.js
+# Terminal 2 - Frontend
+npm run start:frontend
+# or
+node frontend/index.js
 ```
 
 **Option 2: Run both concurrently**
 ```bash
 npm start
+# or
+npm run dev
 ```
 
 ### Access Points
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| Frontend | http://localhost:4000 | Web UI (Spotify Dark Theme) |
+| Frontend | http://localhost:4000 | Web UI |
 | Backend API | http://localhost:3000 | REST API |
-
-### Verification
-
-Run the verification script to test all APIs:
-```bash
-node verify_db.js
-```
 
 ---
 
@@ -118,33 +127,33 @@ node verify_db.js
 
 ### Artists API
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/artists` | List all artists (filter: `?country=`) |
-| GET | `/artists/:id` | Get artist by ID (includes albums) |
-| POST | `/artists` | Create artist `{artist_name, country}` |
-| PUT | `/artists/:id` | Update artist |
-| DELETE | `/artists/:id` | Delete artist (CASCADE: deletes albums & songs) |
+| Method | Endpoint | Controller |
+|--------|----------|------------|
+| GET | `/artists` | `artistsController.getAllArtists()` |
+| GET | `/artists/:id` | `artistsController.getArtistById()` |
+| POST | `/artists` | `artistsController.createArtist()` |
+| PUT | `/artists/:id` | `artistsController.updateArtist()` |
+| DELETE | `/artists/:id` | `artistsController.deleteArtist()` |
 
 ### Albums API
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/albums` | List all albums (filters: `?artist_id=`, `?release_year=`) |
-| GET | `/albums/:id` | Get album by ID (includes artist & songs) |
-| POST | `/albums` | Create album `{album_title, release_year, artist_id}` |
-| PUT | `/albums/:id` | Update album |
-| DELETE | `/albums/:id` | Delete album (CASCADE: deletes songs) |
+| Method | Endpoint | Controller |
+|--------|----------|------------|
+| GET | `/albums` | `albumsController.getAllAlbums()` |
+| GET | `/albums/:id` | `albumsController.getAlbumById()` |
+| POST | `/albums` | `albumsController.createAlbum()` |
+| PUT | `/albums/:id` | `albumsController.updateAlbum()` |
+| DELETE | `/albums/:id` | `albumsController.deleteAlbum()` |
 
 ### Songs API
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/songs` | List all songs (filters: `?artist_id=`, `?album_id=`, `?genre=`) |
-| GET | `/songs/:id` | Get song by ID (includes album & artist) |
-| POST | `/songs` | Create song `{song_name, genre, duration, album_id}` |
-| PUT | `/songs/:id` | Update song |
-| DELETE | `/songs/:id` | Delete song |
+| Method | Endpoint | Controller |
+|--------|----------|------------|
+| GET | `/songs` | `songsController.getAllSongs()` |
+| GET | `/songs/:id` | `songsController.getSongById()` |
+| POST | `/songs` | `songsController.createSong()` |
+| PUT | `/songs/:id` | `songsController.updateSong()` |
+| DELETE | `/songs/:id` | `songsController.deleteSong()` |
 
 ---
 
@@ -158,7 +167,6 @@ node verify_db.js
 ### Filtering System
 - **Songs**: Filter by artist, album, or genre
 - **Albums**: Filter by artist or release year
-- Query parameters passed through Axios to backend API
 
 ### Relational Data Display
 - Songs show associated album and artist names
@@ -166,33 +174,38 @@ node verify_db.js
 - Artists show album count
 
 ### UI/UX - Spotify Dark Theme
-- **Font**: Sukhumvit Set (loaded from Google Fonts)
 - **Color Palette**:
-  - Background: `#121212` (base), `#181818` (surface), `#282828` (card)
+  - Background: `#121212`, `#181818`, `#282828`
   - Accent: `#1DB954` (Spotify Green)
-  - Text: `#FFFFFF` (primary), `#B3B3B3` (secondary), `#6B6B6B` (muted)
-  - Danger: `#E22134` (red)
-  - Edit: `#f59e0b` (amber)
-- **Design**: Flat solid fills only, no gradients
-- **Components**: Dark navbar, dark cards, dark tables, dark forms
-- **Responsive design** with mobile support
-- **Custom scrollbar** (dark themed)
-
-### Seed Data
-Auto-populated on first run:
-- 3 Artists: The Beatles, Queen, Michael Jackson
-- 3 Albums: Abbey Road, A Night at the Opera, Thriller
-- 6 Songs with various genres (Rock, Pop)
+  - Text: `#FFFFFF`, `#B3B3B3`, `#6B6B6B`
+- **Design**: Flat solid fills, no gradients
+- **Font**: Sukhumvit Set (Google Fonts)
 
 ---
 
 ## Development Conventions
 
+### Code Organization
+
+**Backend:**
+```
+routes/     → HTTP endpoints, request/response handling
+controllers/ → Business logic, database operations
+config/     → Database, environment configuration
+utils/      → Helper functions
+```
+
+**Frontend:**
+```
+routes/     → Page routes, form handling
+utils/      → API client, helper functions
+```
+
 ### Code Style
-- **Comments**: Bilingual (Thai + English) for clarity
-- **Naming**: snake_case for database fields, camelCase for JavaScript
-- **Async/Await**: Used throughout for database operations
-- **Error Handling**: Try-catch blocks with user-friendly messages
+- **Comments**: Bilingual (Thai + English)
+- **Naming**: snake_case for DB, camelCase for JS
+- **Async/Await**: Used throughout
+- **Error Handling**: Try-catch with user-friendly messages
 
 ### API Response Format
 ```javascript
@@ -205,56 +218,55 @@ Auto-populated on first run:
 }
 ```
 
-### Frontend Patterns
-- EJS partials for header/footer
-- Header includes Google Fonts link (Sukhumvit Set)
-- Form actions use POST method (PUT/DELETE routed via Express)
-- Filter forms use GET with query parameters
-- Inline confirmation for destructive actions
-- Page headers wrapped in `<div>` for flex layout
+---
 
-### CSS Conventions - Spotify Dark Theme
-- **CSS Variables**: All colors defined in `:root`
-- **Font**: `'Sukhumvit Set', 'Helvetica Neue', Arial, sans-serif`
-- **Line-height**: 1.3-1.6 for readability
-- **Box-sizing**: border-box globally (`*, *::before, *::after`)
-- **Responsive breakpoints**: 768px
-- **Buttons**: Rounded (500px border-radius)
-- **Tables**: Striped rows (odd/even backgrounds)
-- **Forms**: Dark inputs with green focus border
-- **Badges**: Green pill shape (`#1a3a1a` bg, `#1DB954` text)
-- **No gradients**: Flat solid fills only
+## File Responsibilities
 
-### Database Practices
-- `timestamps: false` - No auto-generated created_at/updated_at
-- `underscored: true` - Snake case column names
-- CASCADE delete for referential integrity
-- Auto-increment integer primary keys
+### Backend Files
+
+| File | Lines | Responsibility |
+|------|-------|----------------|
+| `backend/index.js` | ~50 | Express app setup, middleware, route mounting |
+| `backend/config/database.js` | ~15 | Sequelize connection |
+| `backend/routes/artists.js` | ~130 | Artist HTTP endpoints |
+| `backend/routes/albums.js` | ~150 | Album HTTP endpoints |
+| `backend/routes/songs.js` | ~150 | Song HTTP endpoints |
+| `backend/controllers/artists.js` | ~80 | Artist business logic |
+| `backend/controllers/albums.js` | ~100 | Album business logic |
+| `backend/controllers/songs.js` | ~110 | Song business logic |
+| `backend/utils/helpers.js` | ~15 | Helper functions |
+
+### Frontend Files
+
+| File | Lines | Responsibility |
+|------|-------|----------------|
+| `frontend/index.js` | ~50 | Express app setup, middleware, route mounting |
+| `frontend/routes/pages.js` | ~40 | Main page (home) |
+| `frontend/routes/artists.js` | ~120 | Artist pages & forms |
+| `frontend/routes/albums.js` | ~150 | Album pages & forms |
+| `frontend/routes/songs.js` | ~160 | Song pages & forms |
+| `frontend/utils/api.js` | ~50 | API client with error handling |
 
 ---
 
 ## Common Tasks
 
-### Reset Database
-Delete `music.sqlite` and restart backend to reseed:
-```bash
-rm music.sqlite
-node backend.js
-```
+### Add New API Endpoint
 
-### Add New Entity Type
-1. Add model definition in `models/index.js`
-2. Define relationships with existing models
-3. Create API routes in `backend.js`
-4. Create EJS views in `views/`
-5. Add routes in `frontend.js`
+1. Add controller function in `backend/controllers/<entity>.js`
+2. Add route in `backend/routes/<entity>.js`
+3. Add frontend route in `frontend/routes/<entity>.js`
+4. Create/update EJS view
 
-### Modify Filter Options
-1. Update backend API query parameter handling
-2. Update frontend filter form in relevant EJS template
-3. Ensure query string construction in frontend.js
+### Modify Business Logic
+
+Edit the appropriate controller file:
+- `backend/controllers/artists.js` - Artist logic
+- `backend/controllers/albums.js` - Album logic
+- `backend/controllers/songs.js` - Song logic
 
 ### Change Theme Colors
+
 Edit CSS variables in `public/styles.css` `:root` section
 
 ---
@@ -263,82 +275,25 @@ Edit CSS variables in `public/styles.css` `:root` section
 
 | Issue | Solution |
 |-------|----------|
-| Port already in use | Check with `netstat -ano \| findstr :3000` or `:4000` |
-| Database locked | Close other Node processes, delete `music.sqlite-journal` |
-| CORS errors | Ensure backend CORS allows `http://localhost:4000` |
-| API not responding | Start backend before frontend |
-| Font not loading | Verify Google Fonts link in header.ejs, check network tab |
-| UI looks wrong | Hard refresh browser (Ctrl+F5), clear cache |
+| Port already in use | `netstat -ano \| findstr :3000` or `:4000` |
+| API not responding | Ensure backend is running before frontend |
+| Module not found | Check paths use `..` to go up from backend/frontend folders |
+| CORS errors | Backend CORS allows `http://localhost:4000` |
 
 ---
 
-## File Purposes Summary
+## Current State
 
-| File | Purpose |
-|------|---------|
-| `backend.js` | Express API server with Sequelize ORM integration |
-| `frontend.js` | Express web server with EJS templating |
-| `models/index.js` | Database connection, models, relationships, seed data |
-| `views/header.ejs` | HTML head with Google Fonts + Dark navbar |
-| `views/footer.ejs` | Closing HTML tags + Dark footer |
-| `views/index.ejs` | Home dashboard with dark stat cards |
-| `views/artists.ejs` | Artists list with dark table |
-| `views/artist-form.ejs` | Artist create/edit dark form |
-| `views/albums.ejs` | Albums list with dark table + filters |
-| `views/album-form.ejs` | Album create/edit dark form |
-| `views/songs.ejs` | Songs list with dark table + filters + genre badges |
-| `views/song-form.ejs` | Song create/edit dark form |
-| `public/styles.css` | Spotify Dark Theme CSS (all colors, components) |
-| `verify_db.js` | Automated API testing script |
+### Architecture: Modular (Refactored)
+- **Backend**: 5 files, ~600 total lines (was 700 in 1 file)
+- **Frontend**: 5 files, ~520 total lines (was 550 in 1 file)
+- **Separation of Concerns**: Routes, Controllers, Config separated
+- **Maintainability**: Easy to find and modify specific features
+- **Testability**: Each module can be tested independently
 
----
-
-## Current State (Latest Updates)
-
-### Theme: Spotify Dark Theme
-- **Background**: `#121212` (base), `#181818` (surface), `#282828` (card)
-- **Accent**: `#1DB954` (Spotify Green)
-- **Text**: `#FFFFFF` (primary), `#B3B3B3` (secondary), `#6B6B6B` (muted)
-- **Buttons**: Rounded 500px, solid colors (no gradients)
-- **Tables**: Striped rows with hover effect
-- **Forms**: Dark inputs with green focus border/shadow
-- **Badges**: Green pill (`#1a3a1a` bg, `#1DB954` text)
-- **Scrollbar**: Custom dark themed (8px width)
-
-### Font
-- **Primary**: Sukhumvit Set (Google Fonts)
-- **Fallback**: Helvetica Neue, Arial, sans-serif
-- **Loading**: Via `<link>` in header.ejs
-- **Smoothing**: `-webkit-font-smoothing`, `-moz-osx-font-smoothing`
-
-### CSS Variables (Complete List)
-```css
-:root {
-  --bg-base:        #121212;
-  --bg-surface:     #181818;
-  --bg-card:        #282828;
-  --bg-hover:       #333333;
-  --accent:         #1DB954;
-  --accent-dark:    #158a3e;
-  --text-primary:   #FFFFFF;
-  --text-secondary: #B3B3B3;
-  --text-muted:     #6B6B6B;
-  --border:         #333333;
-  --danger:         #E22134;
-  --tag-bg:         #1a3a1a;
-  --tag-text:       #1DB954;
-  --edit-bg:        #2a2000;
-  --edit-color:     #f59e0b;
-}
-```
-
-### Template Structure
-- Page headers wrapped in `<div>` for better flex layout
-- Consistent button styling (Primary, Secondary, Edit, Delete)
-- Filter sections with dark background
-- Genre badges use `badge-genre` class
-
-### Color Scheme (No Gradients)
-- All backgrounds: Flat solid fills
-- All buttons: Solid colors with border-radius 500px
-- Hover effects: Transform scale or background change only
+### Benefits of Refactoring
+1. **Easier to understand** - Each file has single responsibility
+2. **Easier to maintain** - Changes are localized
+3. **Easier to test** - Can test controllers independently
+4. **Better collaboration** - Multiple developers can work on different files
+5. **Scalability** - Easy to add new features without bloating files
