@@ -1,0 +1,52 @@
+<%- include('header', { page: 'home' }) %>
+
+<div class="page-header">
+  <h1>🎵 ยินดีต้อนรับสู่ Song Store</h1>
+  <p>ระบบจัดการข้อมูลศิลปิน อัลบั้ม และเพลง</p>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error">
+    ⚠️ <%= error %>
+  </div>
+<% } %>
+
+<div class="dashboard">
+  <div class="card stat-card">
+    <div class="stat-icon">🎤</div>
+    <div class="stat-info">
+      <h3><%= artistsCount %></h3>
+      <p>ศิลปิน</p>
+    </div>
+    <a href="/artists" class="card-link">ดูทั้งหมด →</a>
+  </div>
+  
+  <div class="card stat-card">
+    <div class="stat-icon">💿</div>
+    <div class="stat-info">
+      <h3><%= albumsCount %></h3>
+      <p>อัลบั้ม</p>
+    </div>
+    <a href="/albums" class="card-link">ดูทั้งหมด →</a>
+  </div>
+  
+  <div class="card stat-card">
+    <div class="stat-icon">🎵</div>
+    <div class="stat-info">
+      <h3><%= songsCount %></h3>
+      <p>เพลง</p>
+    </div>
+    <a href="/songs" class="card-link">ดูทั้งหมด →</a>
+  </div>
+</div>
+
+<div class="quick-actions">
+  <h2>จัดการข้อมูล</h2>
+  <div class="action-buttons">
+    <a href="/artists/new" class="btn btn-primary">➕ เพิ่มศิลปิน</a>
+    <a href="/albums/new" class="btn btn-primary">➕ เพิ่มอัลบั้ม</a>
+    <a href="/songs/new" class="btn btn-primary">➕ เพิ่มเพลง</a>
+  </div>
+</div>
+
+<%- include('footer') %>

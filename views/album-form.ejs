@@ -1,0 +1,52 @@
+<%- include('header', { page: 'albums' }) %>
+
+<div class="page-header">
+  <h1><%= title %></h1>
+  <a href="/albums" class="btn btn-secondary">← กลับไปรายการอัลบั้ม</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error">
+    ⚠️ <%= error %>
+  </div>
+<% } %>
+
+<div class="form-container">
+  <form action="<%= action %>" method="POST" class="data-form">
+    <div class="form-group">
+      <label for="album_title">ชื่ออัลบั้ม *</label>
+      <input type="text" id="album_title" name="album_title" 
+             value="<%= album ? album.album_title : '' %>" 
+             required placeholder="ระบุชื่ออัลบั้ม">
+    </div>
+    
+    <div class="form-group">
+      <label for="release_year">ปีที่ออก *</label>
+      <input type="number" id="release_year" name="release_year" 
+             value="<%= album ? album.release_year : '' %>" 
+             required placeholder="เช่น 1980" min="1900" max="2100">
+    </div>
+    
+    <div class="form-group">
+      <label for="artist_id">ศิลปิน *</label>
+      <select name="artist_id" id="artist_id" required>
+        <option value="">-- เลือกศิลปิน --</option>
+        <% artists.forEach(artist => { %>
+          <option value="<%= artist.artist_id %>" 
+                  <%= album && album.artist_id == artist.artist_id ? 'selected' : '' %>>
+            <%= artist.artist_name %>
+          </option>
+        <% }); %>
+      </select>
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <%= method === 'POST' ? '➕ สร้าง' : '✏️ บันทึกการแก้ไข' %>
+      </button>
+      <a href="/albums" class="btn btn-secondary">ยกเลิก</a>
+    </div>
+  </form>
+</div>
+
+<%- include('footer') %>

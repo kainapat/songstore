@@ -1,0 +1,39 @@
+<%- include('header', { page: 'artists' }) %>
+
+<div class="page-header">
+  <h1><%= title %></h1>
+  <a href="/artists" class="btn btn-secondary">← กลับไปรายการศิลปิน</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error">
+    ⚠️ <%= error %>
+  </div>
+<% } %>
+
+<div class="form-container">
+  <form action="<%= action %>" method="POST" class="data-form">
+    <div class="form-group">
+      <label for="artist_name">ชื่อศิลปิน *</label>
+      <input type="text" id="artist_name" name="artist_name" 
+             value="<%= artist ? artist.artist_name : '' %>" 
+             required placeholder="ระบุชื่อศิลปิน">
+    </div>
+    
+    <div class="form-group">
+      <label for="country">ประเทศ</label>
+      <input type="text" id="country" name="country" 
+             value="<%= artist ? (artist.country || '') : '' %>" 
+             placeholder="ระบุประเทศ">
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        <%= method === 'POST' ? '➕ สร้าง' : '✏️ บันทึกการแก้ไข' %>
+      </button>
+      <a href="/artists" class="btn btn-secondary">ยกเลิก</a>
+    </div>
+  </form>
+</div>
+
+<%- include('footer') %>

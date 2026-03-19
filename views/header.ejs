@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' : '' %>Song Store</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="logo">🎵 Song Store</a>
+      <ul class="nav-links">
+        <li><a href="/" class="<%= page === 'home' ? 'active' : '' %>">หน้าแรก</a></li>
+        <li><a href="/artists" class="<%= page === 'artists' ? 'active' : '' %>">ศิลปิน</a></li>
+        <li><a href="/albums" class="<%= page === 'albums' ? 'active' : '' %>">อัลบั้ม</a></li>
+        <li><a href="/songs" class="<%= page === 'songs' ? 'active' : '' %>">เพลง</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <main class="container">

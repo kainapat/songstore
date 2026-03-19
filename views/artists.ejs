@@ -1,0 +1,51 @@
+<%- include('header', { page: 'artists' }) %>
+
+<div class="page-header">
+  <h1>🎤 จัดการศิลปิน</h1>
+  <a href="/artists/new" class="btn btn-primary">➕ เพิ่มศิลปินใหม่</a>
+</div>
+
+<% if (typeof error !== 'undefined' && error) { %>
+  <div class="alert alert-error">
+    ⚠️ <%= error %>
+  </div>
+<% } %>
+
+<div class="table-container">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>ชื่อศิลปิน</th>
+        <th>ประเทศ</th>
+        <th>จำนวนอัลบั้ม</th>
+        <th>จัดการ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (artists.length === 0) { %>
+        <tr>
+          <td colspan="5" class="text-center">ไม่มีข้อมูลศิลปิน</td>
+        </tr>
+      <% } else { %>
+        <% artists.forEach(artist => { %>
+          <tr>
+            <td><%= artist.artist_id %></td>
+            <td><strong><%= artist.artist_name %></strong></td>
+            <td><%= artist.country || '-' %></td>
+            <td><%= artist.albums ? artist.albums.length : 0 %> อัลบั้ม</td>
+            <td class="actions">
+              <a href="/artists/<%= artist.artist_id %>/edit" class="btn btn-sm btn-edit">✏️ แก้ไข</a>
+              <form action="/artists/<%= artist.artist_id %>/delete" method="POST" style="display: inline;" 
+                    onsubmit="return confirm('คุณต้องการลบศิลปินนี้หรือไม่?');">
+                <button type="submit" class="btn btn-sm btn-delete">🗑️ ลบ</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('footer') %>
