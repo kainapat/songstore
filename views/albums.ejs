@@ -18,25 +18,25 @@
   <h3>🔍 กรองข้อมูล</h3>
   <form action="/albums" method="GET" class="filter-form">
     <div class="filter-group">
-      <label for="artist_id">ศิลปิน:</label>
+      <label for="artist_id">ศิลปิน</label>
       <select name="artist_id" id="artist_id">
         <option value="">-- ทั้งหมด --</option>
         <% artists.forEach(artist => { %>
-          <option value="<%= artist.artist_id %>" 
+          <option value="<%= artist.artist_id %>"
                   <%= filters.artist_id == artist.artist_id ? 'selected' : '' %>>
             <%= artist.artist_name %>
           </option>
         <% }); %>
       </select>
     </div>
-    
+
     <div class="filter-group">
-      <label for="release_year">ปี:</label>
-      <input type="number" name="release_year" id="release_year" 
-             value="<%= filters.release_year || '' %>" 
+      <label for="release_year">ปี</label>
+      <input type="number" name="release_year" id="release_year"
+             value="<%= filters.release_year || '' %>"
              placeholder="เช่น 1980" min="1900" max="2100">
     </div>
-    
+
     <div class="filter-actions">
       <button type="submit" class="btn btn-primary">กรอง</button>
       <a href="/albums" class="btn btn-secondary">ล้าง</a>
@@ -71,7 +71,7 @@
             <td><%= album.songs ? album.songs.length : 0 %> เพลง</td>
             <td class="actions">
               <a href="/albums/<%= album.album_id %>/edit" class="btn btn-sm btn-edit">✏️ แก้ไข</a>
-              <form action="/albums/<%= album.album_id %>/delete" method="POST" style="display: inline;" 
+              <form action="/albums/<%= album.album_id %>/delete" method="POST" style="display: inline;"
                     onsubmit="return confirm('คุณต้องการลบอัลบั้มนี้หรือไม่?');">
                 <button type="submit" class="btn btn-sm btn-delete">🗑️ ลบ</button>
               </form>

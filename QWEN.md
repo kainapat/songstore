@@ -28,6 +28,7 @@
 | **Frontend** | Express, EJS templates, Axios |
 | **Database** | SQLite3 with Sequelize ORM |
 | **Fonts** | Google Fonts - Sukhumvit Set |
+| **Theme** | Spotify Dark Theme |
 
 ### Database Schema
 
@@ -58,17 +59,17 @@ songstore/
 ├── models/
 │   └── index.js            # Sequelize models + relationships + seed data
 ├── views/                  # EJS templates
-│   ├── header.ejs          # Navigation header (with Google Fonts link)
-│   ├── footer.ejs          # Footer component
-│   ├── index.ejs           # Home/Dashboard page
-│   ├── artists.ejs         # Artists list page
-│   ├── artist-form.ejs     # Create/Edit artist form
-│   ├── albums.ejs          # Albums list page (with filters)
-│   ├── album-form.ejs      # Create/Edit album form
-│   ├── songs.ejs           # Songs list page (with filters)
-│   └── song-form.ejs       # Create/Edit song form
+│   ├── header.ejs          # Navigation header (Spotify Dark navbar)
+│   ├── footer.ejs          # Footer component (Dark)
+│   ├── index.ejs           # Home/Dashboard (Dark cards)
+│   ├── artists.ejs         # Artists list (Dark table)
+│   ├── artist-form.ejs     # Create/Edit artist (Dark form)
+│   ├── albums.ejs          # Albums list with filters (Dark)
+│   ├── album-form.ejs      # Create/Edit album (Dark form)
+│   ├── songs.ejs           # Songs list with filters (Dark)
+│   └── song-form.ejs       # Create/Edit song (Dark form)
 └── public/
-    └── styles.css          # Global styles (Sukhumvit Set font, responsive design)
+    └── styles.css          # Spotify Dark Theme CSS
 ```
 
 ---
@@ -101,7 +102,7 @@ npm start
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| Frontend | http://localhost:4000 | Web UI |
+| Frontend | http://localhost:4000 | Web UI (Spotify Dark Theme) |
 | Backend API | http://localhost:3000 | REST API |
 
 ### Verification
@@ -164,13 +165,18 @@ node verify_db.js
 - Albums show associated artist name
 - Artists show album count
 
-### UI/UX
+### UI/UX - Spotify Dark Theme
 - **Font**: Sukhumvit Set (loaded from Google Fonts)
-- **Dashboard Cards**: Grid layout with proper spacing (padding: 30px 25px 35px)
-- **Card Links**: Inline-block positioning (not absolute) to prevent text overlap
+- **Color Palette**:
+  - Background: `#121212` (base), `#181818` (surface), `#282828` (card)
+  - Accent: `#1DB954` (Spotify Green)
+  - Text: `#FFFFFF` (primary), `#B3B3B3` (secondary), `#6B6B6B` (muted)
+  - Danger: `#E22134` (red)
+  - Edit: `#f59e0b` (amber)
+- **Design**: Flat solid fills only, no gradients
+- **Components**: Dark navbar, dark cards, dark tables, dark forms
 - **Responsive design** with mobile support
-- **Gradient theme** (purple/indigo)
-- **Clean table layouts** with hover effects
+- **Custom scrollbar** (dark themed)
 
 ### Seed Data
 Auto-populated on first run:
@@ -207,14 +213,17 @@ Auto-populated on first run:
 - Inline confirmation for destructive actions
 - Page headers wrapped in `<div>` for flex layout
 
-### CSS Conventions
-- **Font**: `'Sukhumvit Set', 'Sarabun', sans-serif`
+### CSS Conventions - Spotify Dark Theme
+- **CSS Variables**: All colors defined in `:root`
+- **Font**: `'Sukhumvit Set', 'Helvetica Neue', Arial, sans-serif`
 - **Line-height**: 1.3-1.6 for readability
 - **Box-sizing**: border-box globally (`*, *::before, *::after`)
 - **Responsive breakpoints**: 768px
-- **Gradient buttons and badges**
-- **Card padding**: 30px 25px 35px (extra bottom padding)
-- **Card links**: inline-block with margin-top (not absolute positioned)
+- **Buttons**: Rounded (500px border-radius)
+- **Tables**: Striped rows (odd/even backgrounds)
+- **Forms**: Dark inputs with green focus border
+- **Badges**: Green pill shape (`#1a3a1a` bg, `#1DB954` text)
+- **No gradients**: Flat solid fills only
 
 ### Database Practices
 - `timestamps: false` - No auto-generated created_at/updated_at
@@ -245,11 +254,8 @@ node backend.js
 2. Update frontend filter form in relevant EJS template
 3. Ensure query string construction in frontend.js
 
-### Change Font
-Edit `views/header.ejs` to change Google Fonts link, and update `body` font-family in `public/styles.css`
-
-### Fix Card Text Overlap
-Ensure `.card-link` uses `position: relative` and `display: inline-block` with `margin-top`, and `.card` has sufficient bottom padding (35px)
+### Change Theme Colors
+Edit CSS variables in `public/styles.css` `:root` section
 
 ---
 
@@ -261,9 +267,8 @@ Ensure `.card-link` uses `position: relative` and `display: inline-block` with `
 | Database locked | Close other Node processes, delete `music.sqlite-journal` |
 | CORS errors | Ensure backend CORS allows `http://localhost:4000` |
 | API not responding | Start backend before frontend |
-| Text overlapping | Check internet connection for font, hard refresh (Ctrl+F5) |
 | Font not loading | Verify Google Fonts link in header.ejs, check network tab |
-| Card text overlap | Ensure card-link uses inline-block positioning, check card padding |
+| UI looks wrong | Hard refresh browser (Ctrl+F5), clear cache |
 
 ---
 
@@ -274,46 +279,66 @@ Ensure `.card-link` uses `position: relative` and `display: inline-block` with `
 | `backend.js` | Express API server with Sequelize ORM integration |
 | `frontend.js` | Express web server with EJS templating |
 | `models/index.js` | Database connection, models, relationships, seed data |
-| `views/header.ejs` | HTML head with Google Fonts (Sukhumvit Set) |
-| `views/footer.ejs` | Closing HTML tags and footer |
-| `views/index.ejs` | Home dashboard with stat cards |
-| `views/artists.ejs` | Artists list with table |
-| `views/artist-form.ejs` | Artist create/edit form |
-| `views/albums.ejs` | Albums list with filters |
-| `views/album-form.ejs` | Album create/edit form |
-| `views/songs.ejs` | Songs list with filters |
-| `views/song-form.ejs` | Song create/edit form |
-| `public/styles.css` | Responsive CSS with Sukhumvit Set font, fixed card layout |
+| `views/header.ejs` | HTML head with Google Fonts + Dark navbar |
+| `views/footer.ejs` | Closing HTML tags + Dark footer |
+| `views/index.ejs` | Home dashboard with dark stat cards |
+| `views/artists.ejs` | Artists list with dark table |
+| `views/artist-form.ejs` | Artist create/edit dark form |
+| `views/albums.ejs` | Albums list with dark table + filters |
+| `views/album-form.ejs` | Album create/edit dark form |
+| `views/songs.ejs` | Songs list with dark table + filters + genre badges |
+| `views/song-form.ejs` | Song create/edit dark form |
+| `public/styles.css` | Spotify Dark Theme CSS (all colors, components) |
 | `verify_db.js` | Automated API testing script |
 
 ---
 
 ## Current State (Latest Updates)
 
+### Theme: Spotify Dark Theme
+- **Background**: `#121212` (base), `#181818` (surface), `#282828` (card)
+- **Accent**: `#1DB954` (Spotify Green)
+- **Text**: `#FFFFFF` (primary), `#B3B3B3` (secondary), `#6B6B6B` (muted)
+- **Buttons**: Rounded 500px, solid colors (no gradients)
+- **Tables**: Striped rows with hover effect
+- **Forms**: Dark inputs with green focus border/shadow
+- **Badges**: Green pill (`#1a3a1a` bg, `#1DB954` text)
+- **Scrollbar**: Custom dark themed (8px width)
+
 ### Font
 - **Primary**: Sukhumvit Set (Google Fonts)
-- **Fallback**: Sarabun, Segoe UI, sans-serif
+- **Fallback**: Helvetica Neue, Arial, sans-serif
 - **Loading**: Via `<link>` in header.ejs
 - **Smoothing**: `-webkit-font-smoothing`, `-moz-osx-font-smoothing`
 
-### CSS Improvements (Latest)
-- **Line-height** applied to all text elements (1.3-1.6)
-- **Box-sizing** with `*, *::before, *::after`
-- **Responsive breakpoints** at 768px
-- **White-space: nowrap** for badges and buttons
-- **Card layout fixed**:
-  - Padding: `30px 25px 35px` (extra bottom padding)
-  - Card-link: `display: inline-block`, `margin-top: 10px`, `position: relative`, `bottom: auto`
-  - Stat-info p: `margin: 0 0 15px 0` (bottom margin for spacing)
+### CSS Variables (Complete List)
+```css
+:root {
+  --bg-base:        #121212;
+  --bg-surface:     #181818;
+  --bg-card:        #282828;
+  --bg-hover:       #333333;
+  --accent:         #1DB954;
+  --accent-dark:    #158a3e;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #B3B3B3;
+  --text-muted:     #6B6B6B;
+  --border:         #333333;
+  --danger:         #E22134;
+  --tag-bg:         #1a3a1a;
+  --tag-text:       #1DB954;
+  --edit-bg:        #2a2000;
+  --edit-color:     #f59e0b;
+}
+```
 
 ### Template Structure
 - Page headers wrapped in `<div>` for better flex layout
-- Consistent button styling across all pages
-- Filter sections with proper spacing
+- Consistent button styling (Primary, Secondary, Edit, Delete)
+- Filter sections with dark background
+- Genre badges use `badge-genre` class
 
-### Color Scheme
-- **Primary**: #667eea (purple)
-- **Secondary**: #764ba2 (indigo)
-- **Gradient**: 135deg linear gradient
-- **Text**: #333, #555, #777
-- **White**: #ffffff for cards/forms
+### Color Scheme (No Gradients)
+- All backgrounds: Flat solid fills
+- All buttons: Solid colors with border-radius 500px
+- Hover effects: Transform scale or background change only

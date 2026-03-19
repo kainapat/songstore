@@ -38,7 +38,7 @@
             <td><%= artist.albums ? artist.albums.length : 0 %> อัลบั้ม</td>
             <td class="actions">
               <a href="/artists/<%= artist.artist_id %>/edit" class="btn btn-sm btn-edit">✏️ แก้ไข</a>
-              <form action="/artists/<%= artist.artist_id %>/delete" method="POST" style="display: inline;" 
+              <form action="/artists/<%= artist.artist_id %>/delete" method="POST" style="display: inline;"
                     onsubmit="return confirm('คุณต้องการลบศิลปินนี้หรือไม่?');">
                 <button type="submit" class="btn btn-sm btn-delete">🗑️ ลบ</button>
               </form>

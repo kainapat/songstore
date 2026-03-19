@@ -17,39 +17,39 @@
   <form action="<%= action %>" method="POST" class="data-form">
     <div class="form-group">
       <label for="song_name">ชื่อเพลง *</label>
-      <input type="text" id="song_name" name="song_name" 
-             value="<%= song ? song.song_name : '' %>" 
+      <input type="text" id="song_name" name="song_name"
+             value="<%= song ? song.song_name : '' %>"
              required placeholder="ระบุชื่อเพลง">
     </div>
-    
+
     <div class="form-group">
       <label for="genre">แนวเพลง *</label>
-      <input type="text" id="genre" name="genre" 
-             value="<%= song ? song.genre : '' %>" 
+      <input type="text" id="genre" name="genre"
+             value="<%= song ? song.genre : '' %>"
              required placeholder="เช่น Rock, Pop, Jazz">
     </div>
-    
+
     <div class="form-group">
       <label for="duration">ระยะเวลา (วินาที) *</label>
-      <input type="number" id="duration" name="duration" 
-             value="<%= song ? song.duration : '' %>" 
+      <input type="number" id="duration" name="duration"
+             value="<%= song ? song.duration : '' %>"
              required placeholder="เช่น 240" min="1">
       <small class="form-hint">ตัวอย่าง: 3 นาที 30 วินาที = 210 วินาที</small>
     </div>
-    
+
     <div class="form-group">
       <label for="album_id">อัลบั้ม *</label>
       <select name="album_id" id="album_id" required>
         <option value="">-- เลือกอัลบั้ม --</option>
         <% albums.forEach(album => { %>
-          <option value="<%= album.album_id %>" 
+          <option value="<%= album.album_id %>"
                   <%= song && song.album_id == album.album_id ? 'selected' : '' %>>
             <%= album.album_title %> (<%= album.artist ? album.artist.artist_name : '?' %>)
           </option>
         <% }); %>
       </select>
     </div>
-    
+
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">
         <%= method === 'POST' ? '➕ สร้าง' : '✏️ บันทึกการแก้ไข' %>

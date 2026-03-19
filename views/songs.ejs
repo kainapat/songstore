@@ -18,44 +18,44 @@
   <h3>🔍 กรองข้อมูล</h3>
   <form action="/songs" method="GET" class="filter-form">
     <div class="filter-group">
-      <label for="artist_id">ศิลปิน:</label>
+      <label for="artist_id">ศิลปิน</label>
       <select name="artist_id" id="artist_id">
         <option value="">-- ทั้งหมด --</option>
         <% artists.forEach(artist => { %>
-          <option value="<%= artist.artist_id %>" 
+          <option value="<%= artist.artist_id %>"
                   <%= filters.artist_id == artist.artist_id ? 'selected' : '' %>>
             <%= artist.artist_name %>
           </option>
         <% }); %>
       </select>
     </div>
-    
+
     <div class="filter-group">
-      <label for="album_id">อัลบั้ม:</label>
+      <label for="album_id">อัลบั้ม</label>
       <select name="album_id" id="album_id">
         <option value="">-- ทั้งหมด --</option>
         <% albums.forEach(album => { %>
-          <option value="<%= album.album_id %>" 
+          <option value="<%= album.album_id %>"
                   <%= filters.album_id == album.album_id ? 'selected' : '' %>>
             <%= album.album_title %>
           </option>
         <% }); %>
       </select>
     </div>
-    
+
     <div class="filter-group">
-      <label for="genre">แนวเพลง:</label>
+      <label for="genre">แนวเพลง</label>
       <select name="genre" id="genre">
         <option value="">-- ทั้งหมด --</option>
         <% genres.forEach(genre => { %>
-          <option value="<%= genre %>" 
+          <option value="<%= genre %>"
                   <%= filters.genre == genre ? 'selected' : '' %>>
             <%= genre %>
           </option>
         <% }); %>
       </select>
     </div>
-    
+
     <div class="filter-actions">
       <button type="submit" class="btn btn-primary">กรอง</button>
       <a href="/songs" class="btn btn-secondary">ล้าง</a>
@@ -86,13 +86,13 @@
           <tr>
             <td><%= song.song_id %></td>
             <td><strong><%= song.song_name %></strong></td>
-            <td><span class="badge"><%= song.genre %></span></td>
+            <td><span class="badge-genre"><%= song.genre %></span></td>
             <td><%= formatDuration(song.duration) %></td>
             <td><%= song.album ? song.album.album_title : '-' %></td>
             <td><%= song.album && song.album.artist ? song.album.artist.artist_name : '-' %></td>
             <td class="actions">
               <a href="/songs/<%= song.song_id %>/edit" class="btn btn-sm btn-edit">✏️ แก้ไข</a>
-              <form action="/songs/<%= song.song_id %>/delete" method="POST" style="display: inline;" 
+              <form action="/songs/<%= song.song_id %>/delete" method="POST" style="display: inline;"
                     onsubmit="return confirm('คุณต้องการลบเพลงนี้หรือไม่?');">
                 <button type="submit" class="btn btn-sm btn-delete">🗑️ ลบ</button>
               </form>

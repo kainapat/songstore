@@ -17,18 +17,18 @@
   <form action="<%= action %>" method="POST" class="data-form">
     <div class="form-group">
       <label for="artist_name">ชื่อศิลปิน *</label>
-      <input type="text" id="artist_name" name="artist_name" 
-             value="<%= artist ? artist.artist_name : '' %>" 
+      <input type="text" id="artist_name" name="artist_name"
+             value="<%= artist ? artist.artist_name : '' %>"
              required placeholder="ระบุชื่อศิลปิน">
     </div>
-    
+
     <div class="form-group">
       <label for="country">ประเทศ</label>
-      <input type="text" id="country" name="country" 
-             value="<%= artist ? (artist.country || '') : '' %>" 
+      <input type="text" id="country" name="country"
+             value="<%= artist ? (artist.country || '') : '' %>"
              placeholder="ระบุประเทศ">
     </div>
-    
+
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">
         <%= method === 'POST' ? '➕ สร้าง' : '✏️ บันทึกการแก้ไข' %>

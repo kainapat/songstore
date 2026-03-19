@@ -1,12 +1,29 @@
 /**
  * styles.css
- * ไฟล์ CSS สำหรับ Song Store
- * ออกแบบให้สวยงาม ทันสมัย และใช้งานง่าย
+ * Spotify Dark Theme - Song Store
  */
 
 /* =========================================
-   Reset & Base Styles
+   CSS Variables & Reset
    ========================================= */
+:root {
+  --bg-base:        #121212;
+  --bg-surface:     #181818;
+  --bg-card:        #282828;
+  --bg-hover:       #333333;
+  --accent:         #1DB954;
+  --accent-dark:    #158a3e;
+  --text-primary:   #FFFFFF;
+  --text-secondary: #B3B3B3;
+  --text-muted:     #6B6B6B;
+  --border:         #333333;
+  --danger:         #E22134;
+  --tag-bg:         #1a3a1a;
+  --tag-text:       #1DB954;
+  --edit-bg:        #2a2000;
+  --edit-color:     #f59e0b;
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -19,15 +36,37 @@ html {
 }
 
 body {
-  font-family: 'Sukhumvit Set', 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  color: #333;
+  font-family: 'Sukhumvit Set', 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* =========================================
+   Typography
+   ========================================= */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+/* =========================================
+   Layout
+   ========================================= */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -35,12 +74,17 @@ body {
   width: 100%;
 }
 
+main.container {
+  padding: 30px 20px;
+  min-height: calc(100vh - 140px);
+}
+
 /* =========================================
    Navigation Bar
    ========================================= */
 .navbar {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
   padding: 15px 0;
   position: sticky;
   top: 0;
@@ -55,72 +99,66 @@ body {
 
 .logo {
   font-size: 1.5rem;
-  font-weight: bold;
-  color: #667eea;
+  font-weight: 700;
+  color: var(--accent);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.2s;
 }
 
 .logo:hover {
-  color: #764ba2;
+  color: var(--accent-dark);
+  text-decoration: none;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 30px;
   margin: 0;
   padding: 0;
 }
 
 .nav-links a {
   text-decoration: none;
-  color: #555;
+  color: var(--text-secondary);
   font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 20px;
-  transition: all 0.3s;
+  padding: 8px 0;
+  transition: color 0.2s;
   display: inline-block;
   line-height: 1.5;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
 }
 
 /* =========================================
-   Main Content
+   Page Header
    ========================================= */
-main.container {
-  padding: 30px 20px;
-  min-height: calc(100vh - 140px);
-}
-
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-  background: white;
+  background: var(--bg-surface);
   padding: 20px 25px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--border);
   flex-wrap: wrap;
   gap: 15px;
 }
 
 .page-header h1 {
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.6rem;
   margin: 0;
-  line-height: 1.3;
   font-weight: 600;
 }
 
 .page-header p {
-  color: #666;
+  color: var(--text-secondary);
   margin: 5px 0 0 0;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -131,59 +169,86 @@ main.container {
    ========================================= */
 .btn {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 24px;
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  border-radius: 500px;
+  font-size: 13px;
+  font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s;
   white-space: nowrap;
   text-align: center;
   line-height: 1.4;
+  letter-spacing: 0.04em;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  background: var(--accent);
+  color: #000;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  background: var(--accent-dark);
+  transform: scale(1.02);
+  text-decoration: none;
 }
 
 .btn-secondary {
-  background: #e0e0e0;
-  color: #555;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 10px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: normal;
 }
 
 .btn-secondary:hover {
-  background: #d0d0d0;
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+  background: transparent;
+  transform: none;
 }
 
 .btn-edit {
-  background: #ffc107;
-  color: #333;
+  background: var(--edit-bg);
+  color: var(--edit-color);
+  border: 1px solid var(--edit-color);
+  border-radius: 500px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: normal;
 }
 
 .btn-edit:hover {
-  background: #ffca2c;
+  background: var(--edit-color);
+  color: #000;
+  border-color: var(--edit-color);
 }
 
-.btn-delete {
-  background: #dc3545;
-  color: white;
+.btn-delete,
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  border-radius: 500px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: normal;
 }
 
-.btn-delete:hover {
-  background: #c82333;
+.btn-delete:hover,
+.btn-danger:hover {
+  background: var(--danger);
+  color: #fff;
 }
 
 .btn-sm {
-  padding: 6px 12px;
-  font-size: 0.85rem;
+  padding: 6px 14px;
+  font-size: 12px;
 }
 
 /* =========================================
@@ -197,17 +262,16 @@ main.container {
 }
 
 .card {
-  background: white;
-  border-radius: 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
   padding: 30px 25px 35px 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.2s, background 0.2s;
   position: relative;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  background: var(--bg-hover);
 }
 
 .stat-card {
@@ -223,47 +287,52 @@ main.container {
 }
 
 .stat-info h3 {
-  font-size: 2.5rem;
-  color: #667eea;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--accent);
   margin-bottom: 5px;
   line-height: 1.2;
 }
 
 .stat-info p {
-  color: #777;
-  font-size: 1rem;
+  color: var(--text-secondary);
+  font-size: 12px;
   margin: 0 0 15px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .card-link {
   display: inline-block;
   margin-top: 10px;
-  color: #667eea;
+  color: var(--accent);
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s;
   position: relative;
   bottom: auto;
 }
 
 .card-link:hover {
-  color: #764ba2;
+  color: var(--accent-dark);
+  text-decoration: underline;
 }
 
 /* =========================================
    Quick Actions
    ========================================= */
 .quick-actions {
-  background: white;
+  background: var(--bg-surface);
   padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid var(--border);
   margin-bottom: 30px;
 }
 
 .quick-actions h2 {
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.3rem;
 }
 
@@ -277,10 +346,10 @@ main.container {
    Tables
    ========================================= */
 .table-container {
-  background: white;
-  border-radius: 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
   margin-bottom: 30px;
 }
 
@@ -290,8 +359,8 @@ main.container {
 }
 
 .data-table thead {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
 }
 
 .data-table th,
@@ -300,33 +369,37 @@ main.container {
   text-align: left;
   vertical-align: middle;
   line-height: 1.4;
+  border-bottom: 1px solid var(--border);
 }
 
 .data-table th {
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.08em;
   line-height: 1.3;
 }
 
-.data-table tbody tr {
-  border-bottom: 1px solid #eee;
-  transition: background 0.3s;
+.data-table tbody tr:nth-child(odd) {
+  background: var(--bg-base);
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: var(--bg-card);
 }
 
 .data-table tbody tr:hover {
-  background: #f8f9fa;
+  background: var(--bg-hover);
+  transition: background 0.15s;
 }
 
-.data-table tbody tr:last-child {
+.data-table tbody tr:last-child td {
   border-bottom: none;
 }
 
 .text-center {
   text-align: center;
-  color: #999;
+  color: var(--text-muted);
   padding: 40px !important;
 }
 
@@ -341,10 +414,10 @@ main.container {
    Forms
    ========================================= */
 .form-container {
-  background: white;
+  background: var(--bg-card);
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border);
   max-width: 600px;
   margin: 0 auto 30px auto;
 }
@@ -363,35 +436,43 @@ main.container {
 
 .form-group label {
   font-weight: 600;
-  color: #333;
-  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   line-height: 1.4;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 12px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
   font-family: inherit;
   width: 100%;
   line-height: 1.5;
+  background: var(--bg-base);
+  color: var(--text-primary);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.2);
+}
+
+.form-group select {
+  color-scheme: dark;
 }
 
 .form-hint {
-  font-size: 0.85rem;
-  color: #888;
+  font-size: 12px;
+  color: var(--text-muted);
   font-style: italic;
   margin-top: -5px;
 }
@@ -406,16 +487,16 @@ main.container {
    Filter Section
    ========================================= */
 .filter-section {
-  background: white;
+  background: var(--bg-surface);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
   margin-bottom: 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .filter-section h3 {
   margin-bottom: 15px;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.1rem;
 }
 
@@ -434,19 +515,26 @@ main.container {
 }
 
 .filter-group label {
-  font-weight: 500;
-  color: #555;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .filter-group select,
 .filter-group input {
-  padding: 10px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 14px;
   min-width: 150px;
-  background: white;
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.filter-group select {
+  color-scheme: dark;
 }
 
 .filter-actions {
@@ -458,14 +546,15 @@ main.container {
 /* =========================================
    Badges
    ========================================= */
-.badge {
+.badge,
+.badge-genre {
   display: inline-block;
-  padding: 4px 12px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  padding: 3px 12px;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-radius: 500px;
+  font-size: 11px;
+  font-weight: 600;
   line-height: 1.4;
   white-space: nowrap;
 }
@@ -475,39 +564,61 @@ main.container {
    ========================================= */
 .alert {
   padding: 15px 20px;
-  border-radius: 10px;
+  border-radius: 8px;
   margin-bottom: 20px;
   font-weight: 500;
   line-height: 1.5;
+  border: 1px solid;
 }
 
 .alert-error {
-  background: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background: rgba(226, 33, 52, 0.1);
+  color: var(--danger);
+  border-color: var(--danger);
 }
 
 .alert-success {
-  background: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background: rgba(29, 185, 84, 0.1);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* =========================================
    Footer
    ========================================= */
 .footer {
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
   text-align: center;
   padding: 20px;
   margin-top: 40px;
 }
 
 .footer p {
-  font-size: 0.9rem;
+  font-size: 13px;
   margin: 0;
   line-height: 1.5;
+}
+
+/* =========================================
+   Scrollbar
+   ========================================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-card);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* =========================================
@@ -520,7 +631,7 @@ main.container {
   }
 
   .nav-links {
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -567,7 +678,7 @@ main.container {
   }
 
   .data-table {
-    font-size: 0.8rem;
+    font-size: 13px;
     display: block;
     overflow-x: auto;
   }
