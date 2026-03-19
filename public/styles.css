@@ -168,40 +168,50 @@ main.container {
    Buttons
    ========================================= */
 .btn {
-  display: inline-block;
-  padding: 10px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 500px;
-  font-size: 13px;
-  font-weight: 700;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s;
   white-space: nowrap;
   text-align: center;
   line-height: 1.4;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 
 .btn-primary {
   background: var(--accent);
-  color: #000;
+  color: #000000 !important;
 }
 
 .btn-primary:hover {
   background: var(--accent-dark);
-  transform: scale(1.02);
+  color: #000000 !important;
+  transform: none;
   text-decoration: none;
+}
+
+.btn-primary:visited {
+  color: #000000 !important;
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--text-secondary);
   border: 1px solid var(--border);
-  padding: 10px 24px;
-  font-size: 13px;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: normal;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .btn-secondary:hover {
@@ -215,11 +225,12 @@ main.container {
   background: var(--edit-bg);
   color: var(--edit-color);
   border: 1px solid var(--edit-color);
-  border-radius: 500px;
-  padding: 6px 14px;
-  font-size: 12px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: normal;
+  transition: background 0.2s, color 0.2s;
 }
 
 .btn-edit:hover {
@@ -233,11 +244,12 @@ main.container {
   background: transparent;
   color: var(--danger);
   border: 1px solid var(--danger);
-  border-radius: 500px;
-  padding: 6px 14px;
-  font-size: 12px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: normal;
+  transition: background 0.2s, color 0.2s;
 }
 
 .btn-delete:hover,
@@ -247,8 +259,9 @@ main.container {
 }
 
 .btn-sm {
-  padding: 6px 14px;
+  padding: 6px 12px;
   font-size: 12px;
+  border-radius: 6px;
 }
 
 /* =========================================
@@ -338,8 +351,14 @@ main.container {
 
 .action-buttons {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   flex-wrap: wrap;
+}
+
+.action-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* =========================================
