@@ -27,6 +27,7 @@
 | **Backend** | Node.js, Express, Sequelize ORM, SQLite3, body-parser, cors |
 | **Frontend** | Express, EJS templates, Axios |
 | **Database** | SQLite3 with Sequelize ORM |
+| **Fonts** | Google Fonts - Sukhumvit Set |
 
 ### Database Schema
 
@@ -57,7 +58,7 @@ songstore/
 ├── models/
 │   └── index.js            # Sequelize models + relationships + seed data
 ├── views/                  # EJS templates
-│   ├── header.ejs          # Navigation header
+│   ├── header.ejs          # Navigation header (with Google Fonts link)
 │   ├── footer.ejs          # Footer component
 │   ├── index.ejs           # Home/Dashboard page
 │   ├── artists.ejs         # Artists list page
@@ -67,7 +68,7 @@ songstore/
 │   ├── songs.ejs           # Songs list page (with filters)
 │   └── song-form.ejs       # Create/Edit song form
 └── public/
-    └── styles.css          # Global styles (responsive design)
+    └── styles.css          # Global styles (Sukhumvit Set font, responsive design)
 ```
 
 ---
@@ -163,6 +164,13 @@ node verify_db.js
 - Albums show associated artist name
 - Artists show album count
 
+### UI/UX
+- **Font**: Sukhumvit Set (loaded from Google Fonts)
+- Responsive design with mobile support
+- Gradient theme (purple/indigo)
+- Card-based dashboard
+- Clean table layouts with hover effects
+
 ### Seed Data
 Auto-populated on first run:
 - 3 Artists: The Beatles, Queen, Michael Jackson
@@ -192,9 +200,17 @@ Auto-populated on first run:
 
 ### Frontend Patterns
 - EJS partials for header/footer
+- Header includes Google Fonts link (Sukhumvit Set)
 - Form actions use POST method (PUT/DELETE routed via Express)
 - Filter forms use GET with query parameters
 - Inline confirmation for destructive actions
+
+### CSS Conventions
+- Font: `'Sukhumvit Set', 'Sarabun', sans-serif`
+- Line-height: 1.3-1.6 for readability
+- Box-sizing: border-box globally
+- Responsive breakpoints at 768px
+- Gradient buttons and badges
 
 ### Database Practices
 - `timestamps: false` - No auto-generated created_at/updated_at
@@ -225,6 +241,9 @@ node backend.js
 2. Update frontend filter form in relevant EJS template
 3. Ensure query string construction in frontend.js
 
+### Change Font
+Edit `views/header.ejs` to change Google Fonts link, and update `body` font-family in `public/styles.css`
+
 ---
 
 ## Troubleshooting
@@ -235,6 +254,8 @@ node backend.js
 | Database locked | Close other Node processes, delete `music.sqlite-journal` |
 | CORS errors | Ensure backend CORS allows `http://localhost:4000` |
 | API not responding | Start backend before frontend |
+| Text overlapping | Check internet connection for font, hard refresh (Ctrl+F5) |
+| Font not loading | Verify Google Fonts link in header.ejs, check network tab |
 
 ---
 
@@ -245,6 +266,29 @@ node backend.js
 | `backend.js` | Express API server with Sequelize ORM integration |
 | `frontend.js` | Express web server with EJS templating |
 | `models/index.js` | Database connection, models, relationships, seed data |
-| `views/*.ejs` | HTML templates with embedded JavaScript |
-| `public/styles.css` | Responsive CSS with gradient theme |
+| `views/header.ejs` | HTML head with Google Fonts (Sukhumvit Set) |
+| `views/footer.ejs` | Closing HTML tags and footer |
+| `views/*.ejs` | Page templates (index, artists, albums, songs, forms) |
+| `public/styles.css` | Responsive CSS with Sukhumvit Set font |
 | `verify_db.js` | Automated API testing script |
+
+---
+
+## Current State (Latest Updates)
+
+### Font
+- **Primary**: Sukhumvit Set (Google Fonts)
+- **Fallback**: Sarabun, Segoe UI, sans-serif
+- **Loading**: Via `<link>` in header.ejs
+
+### CSS Improvements
+- Added `line-height` to all text elements (1.3-1.6)
+- Added `-webkit-font-smoothing` for better rendering
+- Fixed box-sizing with `*, *::before, *::after`
+- Improved responsive design at 768px breakpoint
+- Added `white-space: nowrap` to badges and buttons
+
+### Template Structure
+- Page headers wrapped in `<div>` for better flex layout
+- Consistent button styling across all pages
+- Filter sections with proper spacing
